@@ -110,7 +110,7 @@ var UpdateStartMenuState = (state) => {
 	<div class="ui_window__body"></div>
 	<div class="seven_side_bar">
 		<div class="seven_profile_container">
-			<img src="${await GetFileURL("profile.png")}" class="seven_profile_image">
+			<img src="${await GetFileURL("/.config/7/usertile")}" class="seven_profile_image">
 		</div>
 	</div>`
 	document.body.appendChild(sevenDock);
