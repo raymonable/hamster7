@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <style>
+            @keyframes popIn {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            .container {
+                display: none;
+                width: 87.5%;
+                position: fixed;
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+            .container.visible {
+                display: block;
+            }
+            .warning {
+                background: #ce4747;
+                color: white;
+                padding: 6px;
+                width: fit-content;
+            }
+            h2 {
+                margin: 10px 0;
+                margin-left: -25px;
+            }
+            .float-right {
+                float: right;
+            }
+            .user-tiles {
+                overflow-y: scroll;
+                width: 100%;
+                font-size: 0;
+                aspect-ratio: 3;
+            }
+            .user-tiles * {
+                width: 20%;
+                margin: 0 !important;
+                padding: 0 !important;
+                transition: 0.25s filter;
+                background: black;
+                animation: popIn;
+                animation-duration: 0.125s;
+                animation-fill-mode: both;
+                transition: 0.25s filter;
+            }
+            .user-tiles *.inactive {
+                filter: brightness(75%);
+            }
+            .user-tiles *.active {
+                filter: brightness(100%);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container visible" data-section="start">
+            <h2>Welcome to HAMPSTER7!</h2>
+            You are now on your journey to installing HAMPSTER7, a WINDOWS93 theme addon that implements several fun features to bring back the feel of Windows 7 into WINDOWS93 V2.
+            <p class="warning">
+                <b>Warning!</b>
+                If you have any other themes installed on WINDOWS93, it is recommended that you remove them or format.
+                HAMPSTER7 is not guaranteed to be compatible with any third party themes or software.
+            </p>
+            <button class="float-right" data-navigate="name">Continue</button>
+        </div>
+        <div class="container" data-section="name">
+            <h2>User Profile</h2>
+            Please enter your name and pick a tile.
+            <p>
+                <input placeholder="Username" class="username"><br>
+                <div class="user-tiles"></div>
+            </p>
+            <button class="float-right continue-name" data-navigate="end" disabled>Continue</button>
+        </div>
+        <div class="container" data-section="end">
+            <h2>Ready to Install</h2>
+            <p>
+                HAMPSTER7 is ready to begin installation. If your settings are correct, you may continue.<br>
+                Your system automatically restart when installation is complete.
+            </p>
+            <button class="float-right" data-navigate="finish">Finish</button>
+        </div>
+        <script>
+            // Inject stylesheet from assets
+            var Stylesheet = document.createElement("link");
+            Stylesheet.rel = "stylesheet";
+            Stylesheet.href = window.Assets["7.css"];
+            document.head.appendChild(Stylesheet);
+
+            var selectedTile;
+            var userTilesContainer = document.querySelector(".user-tiles");
+            var input = document.querySelector(".username")
+
+            var updateForm = () => {
+                var filled = !!selectedTile && input.value;
+                var btn = document.querySelector(".continue-name");
+                btn.disabled = !filled;
+            }
+
+            input.value = ``; updateForm();
+            input.addEventListener("keyup", () => {
+                updateForm();
+            });
+
+            document.querySelectorAll("*[data-navigate]").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    if (btn.getAttribute("data-navigate") == "finish")
+                        return window.parent.postMessage(JSON.stringify({
+                            name: input.value,
+                            tile: {
+                                type: "regular",
+                                file: selectedTile
+                            }
+                        }))
+                    if (btn.disabled)
+                        return;
+                    document.querySelectorAll(".container").forEach(elem => elem.classList.remove("visible"));
+                    document.querySelector(`.container[data-section="${btn.getAttribute("data-navigate")}"]`).classList.add("visible");
+
+                    userTilesContainer.childNodes.forEach(elem => elem.remove());
+                    for (var i = 9; 44 > i; i++) {
+                        const src = `usertile${i}.bmp`
+                        setTimeout(() => {
+                            var userTile = document.createElement("img");
+                            userTile.src = Assets[`tiles/${src}`];
+                            userTile.addEventListener("click", (e) => {
+                                userTilesContainer.querySelectorAll("img").forEach(elem => elem.classList = "inactive");
+                                userTile.classList = "active"
+                                selectedTile = src;
+                                updateForm();
+                            })
+                            userTilesContainer.appendChild(userTile);
+                        }, i * 25)
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>
