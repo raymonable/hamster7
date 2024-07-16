@@ -100,9 +100,9 @@ var UpdateStartMenuState = (state) => {
 
 // Apply icons
 (async() => {
-	document.querySelector("#s42_start").querySelector("img").src = await GetFileURL("start_1.png");
-	document.querySelector("#s42_taskbar").style = `background-image: url(${await GetFileURL("reflection.png")})`;
-	document.querySelector("#s42_notif").innerHTML = `<div class="seven_tray"><img src="${await GetFileURL("ethernet.png")}"><img src="${await GetFileURL("volume.png")}"></div><div class="seven_clock">7:04 AM<br>7/11/2024</div>`
+	document.querySelector("#s42_start").querySelector("img").src = await GetFileURL("/.config/7/start_1.png");
+	document.querySelector("#s42_taskbar").style = `background-image: url(${await GetFileURL("/.config/7/reflection.png")})`;
+	document.querySelector("#s42_notif").innerHTML = `<div class="seven_tray"><img src="${await GetFileURL("/.config/7/ethernet.png")}"><img src="${await GetFileURL("/.config/7/volume.png")}"></div><div class="seven_clock">7:04 AM<br>7/11/2024</div>`
 
 	var sevenDock = document.createElement("div");
 	sevenDock.classList = "seven_start_menu glass"
