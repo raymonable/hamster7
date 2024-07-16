@@ -15,10 +15,16 @@ HAMSTER7 is a Windows 7 lookalike theme for WINDOWS93 V2.
 
 ### TODO:
 
+#### Features
+
 - [x] Windows
 - [x] Start Menu / Taskbar
 - [ ] Explorer
 - [ ] Custom User Tiles
+
+#### Bugs
+
+- [ ] Fix the background colors and buttons of some WINDOWS93 themed elements (such as alerts)
 
 ### Installation
 
