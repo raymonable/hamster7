@@ -13,6 +13,13 @@ HAMSTER7 is a Windows 7 lookalike theme for WINDOWS93 V2.
 
 > :exclamation: HAMSTER7 does not affect any in-built apps. They will persist the WINDOWS93 theme due to some Web Security Policies.
 
+### TODO:
+
+- [x] Windows
+- [x] Start Menu / Taskbar
+- [ ] Explorer
+- [ ] Custom User Tiles
+
 ### Installation
 
 Click here (available soon) to open it in WINDOWS93 x64.<br>
