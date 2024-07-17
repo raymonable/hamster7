@@ -28,10 +28,10 @@ HAMSTER7 is a Windows 7 lookalike theme for WINDOWS93 V2.
 
 ### Installation
 
-Click here (available soon) to open it in WINDOWS93 x64.<br>
+Click [here](https://www.windows93.net/#!js%20data:application/javascript;base64,JGxvYWRlci5zY3JpcHQoImh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9naC9yYXltb25hYmxlL2hhbXN0ZXI3QG1haW4vaW5zdGFsbGVyL2luc3RhbGxlci5qcyIsICRub29wKTs=) to open it in WINDOWS93 x64.<br>
 You can also install it from the code block shown below.
 ```js
-$alert("Available soon");
+fetch("https://raw.githubusercontent.com/raymonable/hamster7/main/installer/installer.js").then(_ => _.text()).then(eval)
 ```
 
 ### Legal Disclaimers
