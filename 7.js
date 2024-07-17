@@ -49,24 +49,28 @@ prototype.call = (ref, data) => {
         if (ref.arg)
             if (ref.arg.command)
                 if (le._apps[ref.arg.command]) {
-                    var dockItems = JSON.parse(localStorage["/.config/seven-dock-items"]);
+                    var dockItems = JSON.parse(localStorage[".config/seven-dock-items"]);
                     dockItems = dockItems.filter(i => i !== ref.arg.command);
                     dockItems.push(ref.arg.command);
                     if (dockItems.length > 10)
                         while (dockItems.length > 10)
                             dockItems.shift();
-                    localStorage["/.config/seven-dock-items"] = JSON.stringify(dockItems);
+                    localStorage[".config/seven-dock-items"] = JSON.stringify(dockItems);
                 }
     return RepairWindow($_window.call(ref, data));
 }
 Object.setPrototypeOf($window, prototype);
 
-var GetFileURL = (Path) => {
+var GetFileURL = (Path, Mime) => {
 	return new Promise(async Resolve => {
-		var Blob = await localforage.getItem(Path);
-		if (!Blob)
+		var b = await localforage.getItem(Path);
+		if (!b)
 			return Resolve(``);
-		var BlobURL = URL.createObjectURL(Blob);
+        if (Mime) {
+            const NonMimedBlob = b;
+            b = new Blob([await NonMimedBlob.text()], {type: Mime});
+        }
+		var BlobURL = URL.createObjectURL(b);
 		Resolve(BlobURL);
 	})
 }
@@ -75,7 +79,7 @@ var UpdateStartMenuState = (state) => {
     if (sevenDock) {
         sevenDock.classList[state ? "add" : "remove"]("visible");
         
-        var list = JSON.parse(localStorage["/.config/seven-dock-items"]);
+        var list = JSON.parse(localStorage[".config/seven-dock-items"]);
         sevenDock.querySelector(".ui_window__body").innerHTML = ``
         list.reverse().forEach(appName => {
             var app = le._apps[appName];
@@ -100,9 +104,9 @@ var UpdateStartMenuState = (state) => {
 
 // Apply icons
 (async() => {
-	document.querySelector("#s42_start").querySelector("img").src = await GetFileURL("/.config/7/start_1.png");
-	document.querySelector("#s42_taskbar").style = `background-image: url(${await GetFileURL("/.config/7/reflection.png")})`;
-	document.querySelector("#s42_notif").innerHTML = `<div class="seven_tray"><img src="${await GetFileURL("/.config/7/ethernet.png")}"><img src="${await GetFileURL("/.config/7/volume.png")}"></div><div class="seven_clock">7:04 AM<br>7/11/2024</div>`
+	document.querySelector("#s42_start").querySelector("img").src = await GetFileURL(".config/7/start_1.png");
+	document.querySelector("#s42_taskbar").style = `background-image: url(${await GetFileURL(".config/7/reflection.png")})`;
+	document.querySelector("#s42_notif").innerHTML = `<div class="seven_tray"><img src="${await GetFileURL(".config/7/ethernet.png")}"><img src="${await GetFileURL(".config/7/volume.png")}"></div><div class="seven_clock">7:04 AM<br>7/11/2024</div>`
 
 	var sevenDock = document.createElement("div");
 	sevenDock.classList = "seven_start_menu glass"
@@ -110,7 +114,7 @@ var UpdateStartMenuState = (state) => {
 	<div class="ui_window__body"></div>
 	<div class="seven_side_bar">
 		<div class="seven_profile_container">
-			<img src="${await GetFileURL("/.config/7/usertile")}" class="seven_profile_image">
+			<img src="${await GetFileURL(".config/7/usertile")}" class="seven_profile_image">
 		</div>
 	</div>`
 	document.body.appendChild(sevenDock);
@@ -128,7 +132,7 @@ var UpdateStartMenuState = (state) => {
         {t: 2},
         {t: 1, n: "Help & Support", e: "manifesto"},
         {t: 1, n: "Run", e: "terminal"},
-        {t: 1, n: "Restart", e: "restart"},
+        {t: 1, n: "Restart", e: "reboot"},
         {t: 1, n: "Shutdown", e: "shutdown"}
     ]).forEach(obj => {
         var elem = document.createElement(obj.t == 1 ? "button" : "div");
@@ -163,4 +167,10 @@ var UpdateStartMenuState = (state) => {
                 UpdateStartMenuState(false)
         }
     })
+    
+    // Load stylesheet
+    var Stylesheet = document.createElement("link");
+    Stylesheet.href = await GetFileURL(".config/7/7.css", "text/css");
+    Stylesheet.rel = "stylesheet";
+    document.head.appendChild(Stylesheet);
 })();
