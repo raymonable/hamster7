@@ -1,3 +1,5 @@
+if (window.UpdateStartMenuState)
+    return $alert("HAMPSTER7 is already installed!!!")
 $notif("Please wait. The HAMPSTER7 installer files are being retrieved from the archive...");
 (async () => {
     var Files = [
@@ -48,7 +50,7 @@ $notif("Please wait. The HAMPSTER7 installer files are being retrieved from the 
                 localStorage[".config/7/name"] = data.name;
                 localStorage["boot/7.js"] = await SavedFiles["7.js"].text();
                 localforage.setItem(`.config/7/7.css`, SavedFiles[`7.css`]);
-                
+
                 (["volume.png", "ethernet.png", "reflection.png", "start_1.png"]).forEach(asset => {
                     localforage.setItem(`.config/7/${asset}`, SavedFiles[`assets/${asset}`]);
                 });
@@ -72,13 +74,13 @@ $notif("Please wait. The HAMPSTER7 installer files are being retrieved from the 
                             break;
                     }
                     tileImage.onload = async () => {
-                        iconContext.drawImage(tileImage, 0, 0, 64, 64, 8, 8, 48, 48);
+                        iconContext.drawImage(tileImage, 0, 0, tileImage.width, tileImage.height, 8, 8, 48, 48);
                         iconContext.drawImage(containerImage, 0, 0);
                         iconCanvas.toBlob((blob) => {
                             localforage.setItem(`.config/7/usertile`, blob);
                             setTimeout(() => {
                                 $exe("reboot")
-                            }, 2000);
+                            }, 200);
                         })
                     };
                 };
