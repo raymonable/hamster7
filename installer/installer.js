@@ -10,6 +10,7 @@
             "assets/profile.png",
             "assets/reflection.png",
             "assets/start_1.png",
+            "assets/start_2.png",
             "assets/volume.png",
             "assets/ethernet.png",
             "installer/installer.html",
@@ -53,7 +54,7 @@
                     localStorage["boot/7.js"] = await SavedFiles["7.js"].text();
                     localforage.setItem(`.config/7/7.css`, SavedFiles[`7.css`]);
     
-                    (["volume.png", "ethernet.png", "reflection.png", "start_1.png"]).forEach(asset => {
+                    (["volume.png", "ethernet.png", "reflection.png", "start_1.png", "start_2.png"]).forEach(asset => {
                         localforage.setItem(`.config/7/${asset}`, SavedFiles[`assets/${asset}`]);
                     });
                     
