@@ -104,7 +104,9 @@ var UpdateStartMenuState = (state) => {
 
 // Apply icons
 (async() => {
-	document.querySelector("#s42_start").querySelector("img").src = await GetFileURL(".config/7/start_1.png");
+    var startNoHover = await GetFileURL(".config/7/start_1.png");
+    var startHover = await GetFileURL(".config/7/start_2.png")
+
 	document.querySelector("#s42_taskbar").style = `background-image: url(${await GetFileURL(".config/7/reflection.png")})`;
 	document.querySelector("#s42_notif").innerHTML = `<div class="seven_tray"><img src="${await GetFileURL(".config/7/ethernet.png")}"><img src="${await GetFileURL(".config/7/volume.png")}"></div><div class="seven_clock">7:04 AM<br>7/11/2024</div>`
 
@@ -157,6 +159,14 @@ var UpdateStartMenuState = (state) => {
     newStart.addEventListener("click", (e) => {
         UpdateStartMenuState(!sevenDock.classList.contains("visible"));
     })
+    newStart.innerHTML = `<div></div>`
+	newStart.querySelector("div").style = `background: url(${startNoHover})`;
+    newStart.addEventListener("mouseover", (e) => {
+        newStart.querySelector("div").style = `background: url(${startHover}), url(${startNoHover})`;
+    })
+    newStart.addEventListener("mouseleave", (e) => {
+        newStart.querySelector("div").style = `background: url(${startNoHover})`;
+    })
 
     // Hide dock when clicking on the desktop
     document.body.addEventListener("mousedown", (e) => {
@@ -175,5 +185,3 @@ var UpdateStartMenuState = (state) => {
     Stylesheet.rel = "stylesheet";
     document.head.appendChild(Stylesheet);
 })();
-
-le._apps.format.exec = function() {$confirm("Are you sure to reinstall Windows93, you will loose all your saved data (including HAMSTER7...)",function(ok) {if (ok) $file.format(function() { document.location.reload(true); });});}
