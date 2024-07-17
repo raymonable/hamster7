@@ -120,6 +120,7 @@ var UpdateStartMenuState = (state) => {
 	document.body.appendChild(sevenDock);
 
     ([
+        {t: 1, n: localStorage[".config/7/name"], e: "crazy"},
         {t: 1, n: "Desktop", e: "/a/desktop/"},
         {t: 1, n: "Documents", e: "/c/files/documents/"},
         {t: 1, n: "Pictures", e: "/c/files/images/"},
