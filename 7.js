@@ -185,3 +185,5 @@ var UpdateStartMenuState = (state) => {
     Stylesheet.rel = "stylesheet";
     document.head.appendChild(Stylesheet);
 })();
+
+le._apps.format.exec = function() {$confirm("Are you sure to reinstall Windows93, you will loose all your saved data (including HAMSTER7...)",function(ok) {if (ok) $file.format(function() { document.location.reload(true); });});}
