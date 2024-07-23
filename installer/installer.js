@@ -1,7 +1,7 @@
 (() => {
-    if (!window.UpdateStartMenuState)
+    if (!!window.UpdateStartMenuState)
         return $alert("HAMPSTER7 is already installed!!!")
-    if (window.UpdateStartMenuState)
+    if (!window.UpdateStartMenuState)
     (async () => {
         $notif("Please wait. The HAMPSTER7 installer files are being retrieved from the archive...");
         var Files = [
