@@ -50,6 +50,7 @@
                 if (data.name) {
                     // Yes, it's our data
                     window.SevenInstaller.close();
+                    window.location.hash = "";
                     localStorage[".config/7/name"] = data.name;
                     localStorage["boot/7.js"] = await SavedFiles["7.js"].text();
                     localforage.setItem(`.config/7/7.css`, SavedFiles[`7.css`]);
