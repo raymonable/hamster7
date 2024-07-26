@@ -119,6 +119,7 @@ var UpdateStartMenuState = (state) => {
                 program.classList.add("small");
                 program.innerHTML = `<img src="${le._apps[appName].icon ? `${le._apps[appName].icon}` : "/c/sys/skins/w93/question.png"}">${le._apps[appName].name || appName}`;
                 program.addEventListener("click", () => {
+                    UpdateStartMenuState(false);
                     $exe(appName)
                 });
                 sevenDock.querySelector(".ui_window__body").appendChild(program);
