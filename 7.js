@@ -74,6 +74,18 @@ var GetFileURL = (Path, Mime) => {
 		Resolve(BlobURL);
 	})
 }
+var GetDataURL = (Path, Mime) => {
+    return new Promise(async Resolve => {
+		var b = await localforage.getItem(Path);
+		if (!b)
+			return Resolve(``);
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            Resolve(reader.result);
+        }
+        reader.readAsDataURL(b); 
+	})
+}
 var UpdateStartMenuState = (state) => {
     var sevenDock = document.querySelector(".seven_start_menu");
     if (sevenDock) {
@@ -98,6 +110,20 @@ var UpdateStartMenuState = (state) => {
         var allPrograms = document.createElement('button');
         allPrograms.classList.add("end");
         allPrograms.innerHTML = "<div></div><span>All Programs</span>"
+        allPrograms.addEventListener("click", () => {
+            sevenDock.querySelector(".ui_window__body").innerHTML = ``;
+            var appNames = Object.keys(le._apps).filter(n => {return !(["peng", "necronomicoin"].includes(n))});
+            appNames.sort();
+            appNames.forEach(appName => {
+                var program = document.createElement('button');
+                program.classList.add("small");
+                program.innerHTML = `<img src="${le._apps[appName].icon ? `${le._apps[appName].icon}` : "/c/sys/skins/w93/question.png"}">${le._apps[appName].name || appName}`;
+                program.addEventListener("click", () => {
+                    $exe(appName)
+                });
+                sevenDock.querySelector(".ui_window__body").appendChild(program);
+            })
+        })
         sevenDock.querySelector(".ui_window__body").appendChild(allPrograms);
     }
 }
@@ -184,6 +210,20 @@ var UpdateStartMenuState = (state) => {
     Stylesheet.href = await GetFileURL(".config/7/7.css", "text/css");
     Stylesheet.rel = "stylesheet";
     document.head.appendChild(Stylesheet);
+
+    // Load cursor stylesheet
+    var Cursors = document.createElement("style");
+    Cursors.textContent = `.cursor_default, label, 
+    .ui_menu--scroller > .ui_menu__up_handler:disabled, 
+    .ui_menu--scroller > .ui_menu__down_handler:disabled, 
+    .ui_menu .ui_menu__item--disabled, 
+    html, body, input[readonly]:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea[readonly] {
+        cursor: url("${await GetDataURL(".config/7/aero_arrow.cur")}") !important;
+    };
+    .cursor_pointer, .app_corglitch, .ui_notif span, .ui_menu .ui_menu__item, .ui_icon > img, .ui_icon > .ico, .ui_icon > span, input[type="checkbox"], input[type="radio"], button, a {
+        cursor: url("${await GetDataURL(".config/7/aero_link.cur")}") !important;
+    }`;
+    document.body.appendChild(Cursors);
 })();
 
 le._apps.format.exec = function() {$confirm("Are you sure to reinstall Windows93, you will loose all your saved data (including HAMSTER7...)",function(ok) {if (ok) $file.format(function() { document.location.reload(true); });});}
