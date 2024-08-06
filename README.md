@@ -2,7 +2,7 @@
 
 HAMSTER7 is a Windows 7 lookalike theme for WINDOWS93 V2.
 
-![image](https://github.com/user-attachments/assets/71b7664b-fba0-4d30-a684-ee915ef49ac9)
+![image](https://github.com/user-attachments/assets/b515455a-7758-4dd8-9dea-26916d587971)
 
 ### What HAMSTER7 gives you
 
